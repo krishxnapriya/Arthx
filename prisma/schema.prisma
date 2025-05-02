@@ -7,6 +7,7 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
+  binaryTargets = ["native", "windows"]
 }
 
 datasource db {
@@ -36,7 +37,7 @@ model Account{
   type          AccountType
   balance       Decimal      @default(0) 
   isDefault     Boolean       @default(false)
-  userId        String
+  userId        String        @unique
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions  Transaction[]
   createdAt     DateTime      @default(now())
