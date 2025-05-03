@@ -57,5 +57,6 @@ export async function createAccount(data){
     }
     catch(error){
         throw error;
+        throw error;
     }
 }
