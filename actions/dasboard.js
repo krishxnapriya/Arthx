@@ -21,16 +21,15 @@ export async function createAccount(data){
                 clerkUserId:userId
             },
         });
-        if(!user) throw new Error("User not found");
+        if(!user) {throw new Error("User not found");}
         const balanceFloat = parseFloat(data.balance);
         if(isNaN(balanceFloat)) throw new Error("Invalid balance");
-        const existingAccounts = await db.account.findUnique({
+        const existingAccounts = await db.account.findMany({
             where:{
                 userId:user.id,
             },
         });
-        const shouldBedefault = 
-        existingAccounts.length === 0 ? true : data.isDefault;
+        const shouldBedefault = existingAccounts.length === 0 ? true : data.isDefault;
 
         if(shouldBedefault)
         {
@@ -56,7 +55,6 @@ export async function createAccount(data){
        return {success:true, data:serializedaccount};
     }
     catch(error){
-        throw error;
-        throw error;
+        throw new Error(error.message);
     }
 }
